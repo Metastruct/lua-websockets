@@ -128,8 +128,12 @@ local connect = function(self,ws_url,ws_protocol,ssl_params)
     return nil,err
   end
   if protocol == 'wss' then
-    self.sock = ssl.wrap(self.sock, ssl_params)
-    self.sock:dohandshake()
+    if self.type == 'copas' then
+      self.sock = require'copas'.dohandshake(self.sock, ssl_params)
+    else
+      self.sock = ssl.wrap(self.sock, ssl_params)
+      self.sock:dohandshake()
+    end
   elseif protocol ~= "ws" then
     return nil, 'bad protocol'
   end

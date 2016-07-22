@@ -7,7 +7,7 @@ local new = function(ws)
   local copas = require'copas'
   
   local self = {}
-  
+  self.type = 'copas'
   self.sock_connect = function(self,host,port)
     self.sock = socket.tcp()
     if ws.timeout ~= nil then
