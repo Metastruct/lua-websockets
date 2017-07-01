@@ -15,6 +15,7 @@ local client = function(sock,protocol)
   
   local self = {}
   
+  self.sock = sock
   self.state = 'OPEN'
   self.is_server = true
   
@@ -27,7 +28,7 @@ local client = function(sock,protocol)
   end
   
   self.sock_close = function(self)
-    sock:shutdown()
+    if sock.shutdown then sock:shutdown() end
     sock:close()
   end
   
