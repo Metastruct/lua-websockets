@@ -50,7 +50,7 @@ local client = function(sock,protocol)
   return self
 end
 
-local listen = function(opts)
+local listen = function(opts, ssl_params)
   
   local copas = require'copas'
   assert(opts and (opts.protocols or opts.default))
@@ -71,6 +71,7 @@ local listen = function(opts)
   copas.addserver(
     listener,
     function(sock)
+      if ssl_params then sock = require'copas'.dohandshake(sock, ssl_params) end
       local request = {}
       repeat
         -- no timeout used, so should either return with line or err
