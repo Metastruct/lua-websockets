@@ -129,7 +129,7 @@ local connect = function(self,ws_url,ws_protocol,ssl_params)
   end
   if protocol == 'wss' then
     if self.type == 'copas' then
-      self.sock = require'copas'.dohandshake(self.sock, ssl_params)
+      self.sock = require'copas'.dohandshake(self.sock, ssl_params or {mode = "client", protocol = "any"})
     else
       self.sock = ssl.wrap(self.sock, ssl_params)
       self.sock:dohandshake()
